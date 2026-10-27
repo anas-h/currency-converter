@@ -1,0 +1,36 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Convertir · {{ parent() }}{% endblock %}
+
+{% block body %}
+<h1>Convertir un montant</h1>
+
+{{ form_start(form) }}
+    {% if form.vars.errors|length %}
+        <div class="form-errors">{{ form_errors(form) }}</div>
+    {% endif %}
+    <div class="grid-3">
+        {{ form_row(form.amount) }}
+        {{ form_row(form.from) }}
+        {{ form_row(form.to) }}
+    </div>
+    <button type="submit">Convertir</button>
+{{ form_end(form) }}
+
+{% if result %}
+    <article class="result">
+        <div>{{ result.source }}</div>
+        <div class="big">= {{ result.converted }}</div>
+        <small>
+            1 {{ result.rate.base }} = {{ result.rate.value }} {{ result.rate.target }}
+            · taux du {{ result.rate.date|date('d/m/Y') }}
+        </small>
+    </article>
+{% endif %}
+
+{% if recent|length %}
+    <h2>Dernières conversions</h2>
+    {% include 'history/_table.html.twig' with { conversions: recent } %}
+    <p><a href="{{ path('app_history') }}">Voir tout l'historique</a></p>
+{% endif %}
+{% endblock %}

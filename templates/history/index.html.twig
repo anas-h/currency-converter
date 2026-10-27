@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique · {{ parent() }}{% endblock %}
+
+{% block body %}
+<h1>Mon historique</h1>
+
+{% if conversions|length %}
+    {% include 'history/_table.html.twig' %}
+{% else %}
+    <p>Aucune conversion pour le moment. <a href="{{ path('app_converter') }}">Faire une première conversion</a></p>
+{% endif %}
+{% endblock %}

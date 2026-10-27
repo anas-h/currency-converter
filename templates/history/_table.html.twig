@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th class="num">Montant</th>
+            <th class="num">Résultat</th>
+            <th class="num">Taux</th>
+            <th>Taux du</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for c in conversions %}
+            <tr>
+                <td>{{ c.createdAt|date('d/m/Y H:i') }}</td>
+                <td class="num">{{ c.sourceAmount|number_format(2, ',', ' ') }} {{ c.sourceCurrency }}</td>
+                <td class="num"><strong>{{ c.targetAmount|number_format(2, ',', ' ') }} {{ c.targetCurrency }}</strong></td>
+                <td class="num">{{ c.rate|number_format(6, ',', ' ') }}</td>
+                <td>{{ c.rateDate|date('d/m/Y') }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

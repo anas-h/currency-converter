@@ -1,0 +1,9 @@
+# Surcharges pour l'environnement de test : aucun appel réseau vers Frankfurter
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\Tests\Double\InMemoryRateProvider: ~
+
+    App\Service\Rate\ExchangeRateProviderInterface: '@App\Tests\Double\InMemoryRateProvider'

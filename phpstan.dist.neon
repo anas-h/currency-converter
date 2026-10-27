@@ -1,0 +1,17 @@
+includes:
+    - vendor/phpstan/phpstan-symfony/extension.neon
+
+parameters:
+    level: 6
+    paths:
+        - src
+        - tests
+    excludePaths:
+        - tests/bootstrap.php
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
+    ignoreErrors:
+        # Identifiants générés par Doctrine
+        -
+            identifier: property.unusedType
+            path: src/Entity/*

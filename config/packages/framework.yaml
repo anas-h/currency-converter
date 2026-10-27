@@ -1,0 +1,34 @@
+# see https://symfony.com/doc/current/reference/configuration/framework.html
+framework:
+    secret: '%env(APP_SECRET)%'
+
+    # Note that the session will be started ONLY if you read or write from it.
+    session: true
+
+    #esi: true
+    #fragments: true
+
+    http_client:
+        scoped_clients:
+            # Autowirable as: HttpClientInterface $frankfurterClient
+            frankfurter.client:
+                base_uri: '%env(FRANKFURTER_API_URL)%'
+                timeout: 5
+                headers:
+                    Accept: 'application/json'
+
+    cache:
+        pools:
+            # Autowirable as: CacheInterface $ratesCache
+            rates.cache:
+                adapter: cache.app
+
+when@test:
+    framework:
+        test: true
+        session:
+            storage_factory_id: session.storage.factory.mock_file
+        cache:
+            pools:
+                rates.cache:
+                    adapter: cache.adapter.array

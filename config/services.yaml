@@ -1,0 +1,15 @@
+# yaml-language-server: $schema=../vendor/symfony/dependency-injection/Loader/schema/services.schema.json
+
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+
+    # Implémentation par défaut du fournisseur de taux.
+    # CachedRateProvider la décore automatiquement (attribut #[AsDecorator]).
+    App\Service\Rate\ExchangeRateProviderInterface: '@App\Service\Rate\FrankfurterRateProvider'

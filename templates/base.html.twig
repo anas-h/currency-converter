@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>{% block title %}Convertisseur de devises{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>💱</text></svg>">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2.0.6/css/pico.min.css">
+        <style>
+            main.container { max-width: 56rem; }
+            .flash { padding: .75rem 1rem; border-radius: var(--pico-border-radius); margin-bottom: 1rem; }
+            .flash-success { background: #e6f6ea; color: #1d6b34; }
+            .flash-warning { background: #fff6e0; color: #8a5a00; }
+            .flash-error   { background: #fde8e8; color: #9b1c1c; }
+            .result { text-align: center; }
+            .result .big { font-size: 2rem; font-weight: 700; margin: .25rem 0; }
+            .result small { color: var(--pico-muted-color); }
+            td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+            .form-errors { color: #9b1c1c; }
+            .grid-3 { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+            @media (min-width: 640px) { .grid-3 { grid-template-columns: 2fr 1fr 1fr; } }
+        </style>
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <header class="container">
+            <nav>
+                <ul>
+                    <li><strong><a href="{{ path('app_converter') }}">💱 Convertisseur</a></strong></li>
+                </ul>
+                <ul>
+                    {% if app.user %}
+                        <li><a href="{{ path('app_converter') }}">Convertir</a></li>
+                        <li><a href="{{ path('app_history') }}">Historique</a></li>
+                        <li><a href="{{ path('app_logout') }}" role="button" class="secondary outline">Déconnexion ({{ app.user.userIdentifier }})</a></li>
+                    {% else %}
+                        <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                        <li><a href="{{ path('app_register') }}" role="button">Inscription</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+
+        <main class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="flash flash-{{ label }}" role="alert">{{ message }}</div>
+                {% endfor %}
+            {% endfor %}
+
+            {% block body %}{% endblock %}
+        </main>
+
+        <footer class="container">
+            <small>Taux de référence de la Banque centrale européenne via <a href="https://frankfurter.dev" target="_blank" rel="noopener">Frankfurter</a>, mis à jour chaque jour ouvré vers 16h CET.</small>
+        </footer>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

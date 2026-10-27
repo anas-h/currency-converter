@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription · {{ parent() }}{% endblock %}
+
+{% block body %}
+<article style="max-width: 28rem; margin: 2rem auto;">
+    <h1>Créer un compte</h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        <button type="submit">S'inscrire</button>
+    {{ form_end(form) }}
+
+    <p><small>Déjà inscrit ? <a href="{{ path('app_login') }}">Se connecter</a></small></p>
+</article>
+{% endblock %}
